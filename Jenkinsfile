@@ -1,10 +1,19 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
+    environment {
+        MAVEN_HOME = tool 'maven'
+        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/rehan282002/maven-web-app-kastro1.git'
+                git 'https://github.com/rehan282002/maven-web-app-kastro1.git'
             }
         }
 
@@ -16,7 +25,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'sudo cp target/maven-web-app.war /opt/tomcat9/webapps/'
+                sh 'cp target/maven-web-app.war /opt/tomcat9/webapps/'
             }
         }
     }
