@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'   
+        maven 'Maven' // Jenkins me configured Maven name
     }
 
     triggers {
@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/rehan282002/maven-web-app-kastro1.git'
+                git 'https://github.com/rehan282002/insureme.git'
             }
         }
 
@@ -29,7 +29,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'cp target/maven-web-app.war /opt/tomcat9/webapps/'
+                // Old process kill (agar pehle se run ho raha ho)
+                sh "pkill -f 'insure-me-1.0.jar' || true"
+
+                // Run new JAR in background
+                sh 'nohup java -jar target/insure-me-1.0.jar > app.log 2>&1 &'
             }
         }
     }
