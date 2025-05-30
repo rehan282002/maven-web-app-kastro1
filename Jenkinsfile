@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        WAR = "target/maven-web-app.war"
-        DEST = "/opt/tomcat9/webapps"
-    }
-
     stages {
         stage('Clone') {
             steps {
@@ -21,7 +16,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh "sudo cp ${WAR} ${DEST}/"
+                sh 'sudo cp target/maven-web-app.war /opt/tomcat9/webapps/'
             }
         }
     }
