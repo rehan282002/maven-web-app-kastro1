@@ -1,10 +1,15 @@
 pipeline {
     agent any
 
+    environment {
+        WAR = "target/maven-web-app.war"
+        DEST = "/opt/tomcat9/webapps"
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/rehan282002/maven-web-app-kastro1.git'
+                git branch: 'main', url: 'https://github.com/rehan282002/maven-web-app-kastro1.git'
             }
         }
 
@@ -14,9 +19,9 @@ pipeline {
             }
         }
 
-        stage('Deploy to Tomcat') {
+        stage('Deploy') {
             steps {
-                sh 'sudo cp target/*.war /opt/tomcat9/webapps/'
+                sh "sudo cp ${WAR} ${DEST}/"
             }
         }
     }
