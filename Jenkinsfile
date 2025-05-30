@@ -10,7 +10,7 @@ pipeline {
     }
 
     environment {
-        MAVEN_HOME = tool 'maven'
+        MAVEN_HOME = tool 'Maven'
         PATH = "${MAVEN_HOME}/bin:${env.PATH}"
     }
 
